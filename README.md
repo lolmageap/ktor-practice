@@ -4,8 +4,7 @@
 
 Ktor 프레임워크를 사용하여 간단한 REST API 서버를 구현하는 예제입니다.
 ORM은 Exposed를 사용합니다.  
-프로젝트는 Gradle과 Kotlin DSL로 구성되어 있고 JDK 17, Kotlin -9.13 버전을 사용합니다.  
-
+프로젝트는 Gradle과 Kotlin DSL로 구성되어 있고 JDK 17, Kotlin -9.13 버전을 사용합니다.
 
 ## 2. Dependency
 
@@ -40,32 +39,39 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 
 ## 3. 프로젝트 로드맵
 
+- PPT로 Ktor에 대한 간단한 소개(어떤 장점으로 인해 Ktor를 사용하는지)
 - IntelliJ IDEA에서 Ktor 프로젝트 생성
 - Dependency 추가
 - application.conf file 설정 및 설명
 - Swagger 설정
 - Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
 - Request Validation 설정
-- Call Logging 설정(Kotlin Logging 사용)
+- Call Logging을 plugin으로 만들어서 설정(Kotlin Logging 사용)
 - Contents negation 및 Serialization 설정 (Jackson, Kotlinx Serialization, ZonedDateTime)
 - Routing 설정(Spring과 어떻게 다른지)
 - Koin 설정(이것도 Spring과 어떻게 다른지)
 - Exposed 설정
-- H2 Database 설정
+- H2 Database 설정 및 init.sql 파일로 테이블 생성
 - HikariCP 설정
 - Entity 및 Repository 구현
-- Controller와 Service 구현
+- Controller와 Service 구현(간단한 post와 get API만 구현)
 - Request Parameter를 확장 함수로 만들기, Path variable 별도의 클래스로 만들어서 관리하기
-- Test 코드 작성
-
+- api Test 코드 작성
 
 ## 4. 프로젝트 로드맵 상세
 
-### - IntelliJ IDEA에서 Ktor 프로젝트 생성
+### 0. PPT로 Ktor에 대한 간단한 소개
+
+- Ktor는 무엇이고 어떤 장점으로 인해 Ktor를 사용하는지를 설명합니다.
+- Ktor는 비동기, 빠른 속도, 경량화, 쉬운 사용성, 확장성이 장점입니다.
+- 단점은 아직까지는 생태계가 부족합니다.
+
+### 1. IntelliJ IDEA에서 Ktor 프로젝트 생성
 
 - IntelliJ IDEA에서 새로운 프로젝트를 생성합니다.
 - 생성 할 때 Ktor 프로젝트를 선택합니다.
-- Plugin을 추가 할 때 Dependency에 Double Request, Request Validation, Routing, Swagger, Call Logging, Contents negation, Jackson, Kotlinx Serialization, Exposed, Koin을 추가합니다.
+- Plugin을 추가 할 때 Dependency에 Double Request, Request Validation, Routing, Swagger, Call Logging, Contents negation,
+  Jackson, Kotlinx Serialization, Exposed, Koin을 추가합니다.
 
 ### 2. Dependency 추가
 
@@ -79,7 +85,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - 포트 설정은 8080으로 설정합니다.
 - Swagger 설정은 /swagger로 설정합니다.
 - Database 설정은 H2 Database를 사용하고, HikariCP를 사용하여 설정합니다.
-
 
 ### 4. Swagger 설정
 
@@ -148,7 +153,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 
 - Request Parameter를 확장 함수로 만들어서 사용하는 방법을 설명합니다.
 - Path variable을 별도의 클래스로 만들어서 사용하는 방법을 설명합니다.
-
 
 ### 16. Test 코드 작성
 
