@@ -4,7 +4,7 @@
 
 Ktor 프레임워크를 사용하여 간단한 REST API 서버를 구현하는 예제입니다.
 ORM은 Exposed를 사용합니다.  
-프로젝트는 Gradle과 Kotlin DSL로 구성되어 있고 JDK 17, Kotlin 2.1.0 버전, Ktor Framework는 3.0.3 버전을 사용합니다.
+프로젝트는 Gradle과 Kotlin DSL로 구성되어 있고 JDK 17, Kotlin 2.0.0 버전, Ktor Framework는 3.0.3 버전을 사용합니다.
 
 ## 2. Dependency
 
