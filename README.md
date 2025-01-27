@@ -35,7 +35,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 
 - PPT로 Ktor에 대한 간단한 소개(어떤 장점으로 인해 Ktor를 사용하는지)
 - IntelliJ IDEA에서 Ktor 프로젝트 생성
-- Dependency 추가
+- Dependency 추가 및 변경(gradle.kts와 gradle.properties 파일에 kotlin version, exposed version 변경)
 - application.conf file 설정 및 설명
 - Swagger 설정
 - Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
