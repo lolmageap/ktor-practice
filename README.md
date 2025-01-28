@@ -37,15 +37,13 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - IntelliJ IDEA에서 Ktor 프로젝트 생성
 - Dependency 추가 및 변경(gradle.kts와 gradle.properties 파일에 kotlin version, exposed version 변경)
 - application.conf file 설정 및 설명
-- Routing 설정(Spring과 어떻게 다른지), Swagger 설정
-- Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
-- Request Validation 설정
-- Call Logging을 plugin으로 만들어서 설정(Kotlin Logging 사용)
 - Contents negation 및 Serialization 설정 (Jackson, Kotlinx Serialization, ZonedDateTime)
+- Request Validation 설정, Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
+- Call Logging을 plugin으로 만들어서 설정
+- Routing 설정(Spring과 어떻게 다른지), Swagger 설정
 - Koin 설정(이것도 Spring과 어떻게 다른지)
+- Database 설정
 - Exposed 설정
-- H2 Database 설정 및 init.sql 파일로 테이블 생성
-- HikariCP 설정
 - Entity 및 Repository 구현
 - Controller와 Service 구현(간단한 post와 get API만 구현)
 - Request Parameter를 확장 함수로 만들기, Path variable 별도의 클래스로 만들어서 관리하기
@@ -78,14 +76,11 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - 포트 설정은 8080으로 설정합니다.
 - Database 설정은 H2 Database를 사용하여 설정합니다.
 
-### 4. Routing 설정
+### 4. Contents negation 및 Serialization 설정
 
-- Routing 설정은 Spring과 어떻게 다른지를 설명합니다.
-- Swagger를 사용하여 API를 확인하고 실행하는 방법을 설명합니다.
-- Routing에서 Query parameter와 Request Body를 사용하는 방법을 설명합니다.
-- Request Parameter를 확장 함수로 만들어서 사용하는 방법을 설명합니다.
-- Routing에서 Path variable를 사용하는 방법을 설명합니다.
-- Path variable을 별도의 클래스로 만들어서 사용하는 방법을 설명합니다.
+- Contents negation은 무엇이고 왜 필요한가를 설명합니다.
+- Serialization은 Jackson, Kotlinx Serialization을 사용하여 설정합니다.
+- Body 객체에 ZonedDateTime을 바인딩하는 방법을 설명합니다.
 
 ### 5. Double Request와 Request Validation 설정
 
@@ -98,34 +93,35 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - 추가적으로 Kotlin Logging과 Logback을 사용하여 로깅을 설정합니다.
 - Call Logging은 Request와 Response를 로깅합니다.
 
-### 7. Contents negation 및 Serialization 설정
+### 7. Routing 설정
 
-- Contents negation은 무엇이고 왜 필요한가를 설명합니다.
-- Serialization은 Jackson, Kotlinx Serialization을 사용하여 설정합니다.
-- Body에 ZonedDateTime을 바인딩하는 방법을 설명합니다.
+- Routing 설정은 Spring과 어떻게 다른지를 설명합니다.
+- Swagger를 사용하여 API를 확인하고 실행하는 방법을 설명합니다.
+- Request, Response Model을 만들고 사용하는 방법을 설명합니다.
+- Routing에서 Query parameter와 Request Body를 사용하는 방법을 설명합니다.
+- Request Parameter를 확장 함수로 만들어서 사용하는 방법을 설명합니다.
+- Routing에서 Path variable를 사용하는 방법을 설명합니다.
+- Path variable을 별도의 클래스로 만들어서 사용하는 방법을 설명합니다.
 
 ### 8. Koin 설정
 
 - Koin이 무엇이고 Dependency Injection을 어떻게 하는지를 설명합니다.
 - 설명 할 때 Spring과 어떻게 다른지를 설명합니다.
 
-### 9. Exposed 설정
+### 9. Database 설정
+
+- Database 설정은 H2 Database를 사용합니다.
+- conf 파일에 정의된 Database 설정을 읽어오는 방법을 설명합니다.
+- Transaction과 Connection Pool을 설정합니다.
+
+### 10. Exposed 설정
 
 - Exposed가 무엇이고 ORM을 어떻게 사용하는지를 설명합니다.
 - 간단하게 Entity와 Schema를 만들고 Repository를 만들어서 사용하는 방법을 설명합니다.
 - 간단하게 DAO와 DSL을 사용하는 방법을 설명합니다.
 
-### 10. H2 Database 설정
+### 11. Entity 및 Repository 구현
 
-- Database 설정은 H2 Database를 사용합니다.
-- conf 파일에 Database 설정을 추가합니다.
-- 설정 파일을 읽어오는 방법을 설명합니다.
-- H2 Database를 사용할 때 HikariCP를 사용하여 설정합니다.
-- Transaction과 Connection Pool을 설정합니다.
-
-### 11. Model 및 Repository 구현
-
-- Model과 Repository를 구현합니다.
 - Entity는 Exposed의 Table을 상속 받아서 구현합니다.
 - BaseTable을 만들고 적용하고 Update 시간을 자동으로 설정하는 방법을 설명합니다.
 - Repository는 Entity를 사용하여 CRUD를 구현합니다.
