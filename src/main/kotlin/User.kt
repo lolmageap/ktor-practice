@@ -13,6 +13,7 @@ object Users : Table("users") {
 
     override val primaryKey = PrimaryKey(id)
 }
+
 class UserService(
     private val userRepository: UserRepository,
 ) {
@@ -34,15 +35,14 @@ class UserService(
         name: UserName,
         minAge: Int?,
         maxAge: Int?,
-    ) =
-        newSuspendedTransaction {
-            addLogger(StdOutSqlLogger)
-            userRepository.findOne(
-                name = name,
-                minAge = minAge,
-                maxAge = maxAge,
-            ) ?: throw UserNotFoundException()
-        }
+    ) = newSuspendedTransaction {
+        addLogger(StdOutSqlLogger)
+        userRepository.findOne(
+            name = name,
+            minAge = minAge,
+            maxAge = maxAge,
+        ) ?: throw UserNotFoundException()
+    }
 }
 
 interface UserRepository {
@@ -76,18 +76,46 @@ class UserRepositoryImpl : UserRepository {
         name: UserName,
         minAge: Int?,
         maxAge: Int?,
-    ) =
-        Users.selectAll()
-            .where {
-                (Users.name like "%${name.value}%") and Users.age.between(minAge, maxAge)
-            }
-            .firstOrNull()
-            ?.let {
-                UserResponse(
-                    id = it[Users.id],
-                    name = UserName(it[Users.name]),
-                    age = it[Users.age],
-                    birthday = it[Users.birthday],
-                )
-            }
+    ) = Users.selectAll().where {
+            (Users.name like "%${name.value}%") and Users.age.between(minAge, maxAge)
+        }.firstOrNull()?.let {
+            UserResponse(
+                id = it[Users.id],
+                name = UserName(it[Users.name]),
+                age = it[Users.age],
+                birthday = it[Users.birthday],
+            )
+        }
+}
+
+class UserRepositoryImplV2 : UserRepository {
+    override suspend fun create(
+        username: UserName,
+        insertAge: Int,
+        insertBirthday: LocalDate,
+    ) {
+        println("UserRepositoryImplV2.create")
+        Users.insert {
+            it[name] = username.value
+            it[age] = insertAge
+            it[birthday] = insertBirthday
+        }
+    }
+
+    override suspend fun findOne(
+        name: UserName,
+        minAge: Int?,
+        maxAge: Int?,
+    ) = Users.selectAll().where {
+            (Users.name like "%${name.value}%") and Users.age.between(minAge, maxAge)
+        }.firstOrNull()?.let {
+            UserResponse(
+                id = it[Users.id],
+                name = UserName(it[Users.name]),
+                age = it[Users.age],
+                birthday = it[Users.birthday],
+            )
+        }.also {
+            println("UserRepositoryImplV2.findOne")
+        }
 }

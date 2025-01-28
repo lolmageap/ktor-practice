@@ -4,6 +4,7 @@ import io.ktor.server.application.*
 import org.koin.core.module.dsl.createdAtStart
 import org.koin.core.module.dsl.named
 import org.koin.core.module.dsl.withOptions
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import org.koin.ktor.plugin.Koin
 import org.koin.logger.slf4jLogger
@@ -18,13 +19,11 @@ fun Application.configureFrameworks() {
 }
 
 val userModule = module {
-    single<UserService> { UserService(get()) } withOptions {
-        // named function is qualifier for dependency injection
-        named("singleton")
-        createdAtStart()
-    }
+    single<UserService> { UserService(get(named("secondary"))) }
 
     single<UserRepository> { UserRepositoryImpl() }
+    single<UserRepository>(named("primary")) { UserRepositoryImpl() }
+    single<UserRepository>(named("secondary")) { UserRepositoryImplV2() }
 
     factory { } withOptions {
         named("alwaysNew")
