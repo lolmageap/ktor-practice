@@ -19,8 +19,10 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
     ---
     
     Double Request,
+    Status Pages,
     Request Validation,
     Routing,
+    OpenAPI,
     Swagger,
     Call Logging,
     Contents negation,
@@ -37,6 +39,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - IntelliJ IDEA에서 Ktor 프로젝트 생성
 - Dependency 추가 및 변경(gradle.kts와 gradle.properties 파일에 kotlin version, exposed version 변경)
 - application.conf file 설정 및 설명
+- Exception Handler 설정
 - Contents negation 및 Serialization 설정 (Jackson, Kotlinx Serialization, ZonedDateTime)
 - Request Validation 설정, Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
 - Call Logging을 plugin으로 만들어서 설정
@@ -76,7 +79,12 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - 포트 설정은 8080으로 설정합니다.
 - Database 설정은 H2 Database를 사용하여 설정합니다.
 
-### 4. Contents negation 및 Serialization 설정
+### 4. Exception Handler 설정
+
+- Status Pages를 사용하여 Exception Handler를 설정합니다.
+- Exception.kt File을 별로도 분리합니다.
+
+### 5. Contents negation 및 Serialization 설정
 
 - Contents negation은 무엇이고 왜 필요한가를 설명합니다.
 - Serialization은 Jackson, Kotlinx Serialization을 사용하여 설정합니다.
