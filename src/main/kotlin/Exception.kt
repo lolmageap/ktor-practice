@@ -12,7 +12,8 @@ fun Application.configureException() {
         }
 
         exception<Throwable> { call, cause ->
-            call.respondText(text = "500: $cause", status = HttpStatusCode.InternalServerError)
+            cause.printStackTrace()
+            call.respondText(text = "500: ${cause.message}", status = HttpStatusCode.InternalServerError)
         }
     }
 }
