@@ -9,7 +9,7 @@ Content-Type: application/json
 Cache-Control: no-cache
 
 {
-    "name": "cherhy",
-    "email": "ekxk1234@gmail.com",
-    "password": "12345678"
+  "name": "kim chanwoo",
+  "age": 20,
+  "birthday": "1999-02-11"
 }
