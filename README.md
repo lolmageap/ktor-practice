@@ -41,16 +41,16 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - application.conf file 설정 및 설명
 - Exception Handler 설정
 - Contents negation 및 Serialization 설정 (Jackson, Kotlinx Serialization, ZonedDateTime)
-- Request Validation 설정, Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
 - Call Logging을 plugin으로 만들어서 설정
 - Routing 설정(Spring과 어떻게 다른지), Swagger 설정
+- Request Parameter를 확장 함수로 만들기, Path variable 별도의 클래스로 만들어서 관리하기
 - Koin 설정(이것도 Spring과 어떻게 다른지)
 - Database 설정
 - Exposed 설정
-- Entity 및 Repository 구현
+- Entity 및 Repository 구현(event subscribe로 updated at 구현하기) 
 - Controller와 Service 구현(간단한 post와 get API만 구현)
-- Request Parameter를 확장 함수로 만들기, Path variable 별도의 클래스로 만들어서 관리하기
-- api Test 코드 작성
+- Request Validation 설정, Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
+
 
 ## - 프로젝트 로드맵 상세
 
@@ -67,10 +67,9 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - Plugin을 추가 할 때 Dependency에 Double Request, Request Validation, Routing, Swagger, Call Logging, Contents negation,
   Jackson, Kotlinx Serialization, Exposed, Koin을 추가합니다.
 
-### 2. Dependency 추가
+### 2. Version 변경
 
-- build.gradle.kts 파일에 dependency를 추가합니다.
-- 추가한 dependency는 runtimeOnly에 H2, implementation에 HikariCP, Kotlin Logging를 추가합니다.
+- gradle.properties와 build.gradle.kts에서 kotlin version 2.0.0, exposed 0.55.0으로 수정
 
 ### 3. application.conf file 설정 및 설명
 
@@ -89,11 +88,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - Contents negation은 무엇이고 왜 필요한가를 설명합니다.
 - Serialization은 Jackson, Kotlinx Serialization을 사용하여 설정합니다.
 - Body 객체에 ZonedDateTime을 바인딩하는 방법을 설명합니다.
-
-### 5. Double Request와 Request Validation 설정
-
-- Double Request를 설정할 때 Double Request는 무엇이고 왜 필요한가를 설명합니다.
-- Request Validation을 설정할 때 Request Validation은 무엇이고 왜 필요한가를 설명합니다.
 
 ### 6. Call Logging 설정
 
@@ -131,7 +125,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 ### 11. Entity 및 Repository 구현
 
 - Entity는 Exposed의 Table을 상속 받아서 구현합니다.
-- BaseTable을 만들고 적용하고 Update 시간을 자동으로 설정하는 방법을 설명합니다.
+- Update 시간을 자동으로 설정하는 방법을 설명하고 구현합니다.
 - Repository는 Entity를 사용하여 CRUD를 구현합니다.
 
 ### 12. Controller와 Service 구현
@@ -140,10 +134,10 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - Controller는 Routing을 사용하여 구현합니다.
 - Service는 Repository를 사용하여 구현합니다.
 
-### 13. Test 코드 작성
+### 시간이 남는다면. Double Request와 Request Validation 설정
 
-- JUnit5를 사용하여 Test 코드를 작성합니다.
-- Test 코드는 시간상 Controller만 작성합니다.
+- Double Request를 설정할 때 Double Request는 무엇이고 왜 필요한가를 설명합니다.
+- Request Validation을 설정할 때 Request Validation은 무엇이고 왜 필요한가를 설명합니다.
 
 ## - 프로젝트 실행
 
