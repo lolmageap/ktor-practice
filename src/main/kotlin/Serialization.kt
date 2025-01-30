@@ -29,7 +29,7 @@ data class UserRequest(
 
 @JvmInline
 value class UserName(
-    private val value: String,
+    val value: String,
 ) {
     init {
         require(value.length in 1..20) {
