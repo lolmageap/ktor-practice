@@ -15,6 +15,7 @@ fun Application.configureSerialization() {
     install(ContentNegotiation) {
         jackson {
             enable(SerializationFeature.INDENT_OUTPUT)
+            disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
             registerModules(JavaTimeModule())
             this@configureSerialization.attributes.put(ObjectMapperKey, this)
         }

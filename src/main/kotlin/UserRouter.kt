@@ -4,12 +4,22 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.koin.ktor.ext.inject
+import java.time.LocalDate
 
 fun Route.user() {
+    val userService: UserService by application.inject()
+
     post("/api/v1/users") {
         val request = call.receive<UserRequest>()
-        println("User request: $request")
-        call.respondText { "요청이 성공적으로 들어왔습니다." }
+
+        userService.create(
+            username = request.name,
+            insertAge = request.age,
+            insertBirthday = request.birthday,
+        )
+
+        call.respondText(status = HttpStatusCode.Created) { "요청이 성공적으로 들어왔습니다." }
     }
 
     get("/api/v1/users/{user-id}") {
@@ -20,16 +30,27 @@ fun Route.user() {
         val minAge = call.queryParameters["minAge"]?.toInt()
         val maxAge = call.queryParameters["maxAge"]?.toInt()
 
-        println("User ID: $userId, Name: $name, Min Age: $minAge, Max Age: $maxAge")
-        call.respondText { "요청이 성공적으로 들어왔습니다." }
+        val response = userService.readOne(
+            name = name,
+            minAge = minAge,
+            maxAge = maxAge,
+        )
+
+        call.respond(response)
     }
 
     get("/api/v2/users/{user-id}") {
         val userId = call.pathParameters.userId
 
         val request = call.modelAttributes<GetUserRequest>()
-        println("User ID: $userId, Request: $request")
-        call.respondText { "요청이 성공적으로 들어왔습니다." }
+
+        val response = userService.readOne(
+            name = request.name,
+            minAge = request.minAge,
+            maxAge = request.maxAge,
+        )
+
+        call.respond(response)
     }
 }
 
@@ -37,6 +58,13 @@ data class GetUserRequest(
     val name: UserName,
     val minAge: Int?,
     val maxAge: Int?,
+)
+
+data class UserResponse(
+    val id: Long,
+    val name: UserName,
+    val age: Int,
+    val birthday: LocalDate,
 )
 
 val Parameters.userId: Long

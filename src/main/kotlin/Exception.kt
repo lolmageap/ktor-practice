@@ -19,5 +19,5 @@ fun Application.configureException() {
 }
 
 data class UserNotFoundException(
-    val id: Long,
-) : RuntimeException("User with id $id not found")
+    override val message: String = "User not found",
+) : RuntimeException(message)

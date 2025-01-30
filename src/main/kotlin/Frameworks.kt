@@ -18,11 +18,13 @@ fun Application.configureFrameworks() {
 }
 
 val userModule = module {
-    single { } withOptions {
+    single<UserService> { UserService(get()) } withOptions {
         // named function is qualifier for dependency injection
         named("singleton")
         createdAtStart()
     }
+
+    single<UserRepository> { UserRepositoryImpl() }
 
     factory { } withOptions {
         named("alwaysNew")
