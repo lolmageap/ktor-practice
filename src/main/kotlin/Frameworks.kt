@@ -19,8 +19,6 @@ fun Application.configureFrameworks() {
 }
 
 val userModule = module {
-    single<UserService> { UserService(get(named("secondary"))) }
-
     single<UserRepository> { UserRepositoryImpl() }
     single<UserRepository>(named("primary")) { UserRepositoryImpl() }
     single<UserRepository>(named("secondary")) { UserRepositoryImplV2() }

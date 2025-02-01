@@ -14,37 +14,6 @@ object Users : Table("users") {
     override val primaryKey = PrimaryKey(id)
 }
 
-class UserService(
-    private val userRepository: UserRepository,
-) {
-    suspend fun create(
-        username: UserName,
-        insertAge: Int,
-        insertBirthday: LocalDate,
-    ) {
-        newSuspendedTransaction {
-            userRepository.create(
-                username = username,
-                insertAge = insertAge,
-                insertBirthday = insertBirthday,
-            )
-        }
-    }
-
-    suspend fun readOne(
-        name: UserName,
-        minAge: Int?,
-        maxAge: Int?,
-    ) = newSuspendedTransaction {
-        addLogger(StdOutSqlLogger)
-        userRepository.findOne(
-            name = name,
-            minAge = minAge,
-            maxAge = maxAge,
-        ) ?: throw UserNotFoundException()
-    }
-}
-
 interface UserRepository {
     suspend fun create(
         username: UserName,
@@ -56,7 +25,7 @@ interface UserRepository {
         name: UserName,
         minAge: Int?,
         maxAge: Int?,
-    ): UserResponse?
+    ): UserResponse
 }
 
 class UserRepositoryImpl : UserRepository {
@@ -76,9 +45,10 @@ class UserRepositoryImpl : UserRepository {
         name: UserName,
         minAge: Int?,
         maxAge: Int?,
-    ) = Users.selectAll().where {
+    ) =
+        Users.selectAll().where {
             (Users.name like "%${name.value}%") and Users.age.between(minAge, maxAge)
-        }.firstOrNull()?.let {
+        }.first().let {
             UserResponse(
                 id = it[Users.id],
                 name = UserName(it[Users.name]),
@@ -106,9 +76,10 @@ class UserRepositoryImplV2 : UserRepository {
         name: UserName,
         minAge: Int?,
         maxAge: Int?,
-    ) = Users.selectAll().where {
+    ) =
+        Users.selectAll().where {
             (Users.name like "%${name.value}%") and Users.age.between(minAge, maxAge)
-        }.firstOrNull()?.let {
+        }.first().let {
             UserResponse(
                 id = it[Users.id],
                 name = UserName(it[Users.name]),

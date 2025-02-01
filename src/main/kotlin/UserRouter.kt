@@ -4,20 +4,23 @@ import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import org.koin.ktor.ext.inject
 import java.time.LocalDate
 
 fun Route.user() {
-    val userService: UserService by application.inject()
+    val userRepository by application.inject<UserRepository>()
 
     post("/api/v1/users") {
         val request = call.receive<UserRequest>()
 
-        userService.create(
-            username = request.name,
-            insertAge = request.age,
-            insertBirthday = request.birthday,
-        )
+        newSuspendedTransaction {
+            userRepository.create(
+                username = request.name,
+                insertAge = request.age,
+                insertBirthday = request.birthday,
+            )
+        }
 
         call.respondText(status = HttpStatusCode.Created) { "요청이 성공적으로 들어왔습니다." }
     }
@@ -30,11 +33,14 @@ fun Route.user() {
         val minAge = call.queryParameters["minAge"]?.toInt()
         val maxAge = call.queryParameters["maxAge"]?.toInt()
 
-        val response = userService.readOne(
-            name = name,
-            minAge = minAge,
-            maxAge = maxAge,
-        )
+        val response =
+            newSuspendedTransaction {
+                userRepository.findOne(
+                    name = name,
+                    minAge = minAge,
+                    maxAge = maxAge,
+                )
+            }
 
         call.respond(response)
     }
@@ -44,11 +50,14 @@ fun Route.user() {
 
         val request = call.modelAttributes<GetUserRequest>()
 
-        val response = userService.readOne(
-            name = request.name,
-            minAge = request.minAge,
-            maxAge = request.maxAge,
-        )
+        val response =
+            newSuspendedTransaction {
+                userRepository.findOne(
+                    name = request.name,
+                    minAge = request.minAge,
+                    maxAge = request.maxAge,
+                )
+            }
 
         call.respond(response)
     }
