@@ -1,12 +1,15 @@
 package com.example
 
 import io.ktor.server.application.*
+import io.ktor.server.config.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
 import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabases() {
-    val databaseConfig = DatabaseConfig.fromEnvironment(environment)
+    val databaseConfig = DatabaseConfig.of(environment.config)
 
     val database =
         with(databaseConfig) {
@@ -19,6 +22,7 @@ fun Application.configureDatabases() {
         }
 
     transaction(database) {
+        addLogger(StdOutSqlLogger)
         SchemaUtils.create(Users)
     }
 
@@ -34,10 +38,10 @@ data class DatabaseConfig(
     val password: String,
 ) {
     companion object {
-        fun fromEnvironment(
-            environment: ApplicationEnvironment,
-        ): DatabaseConfig {
-            return with(environment.config) {
+        fun of(
+            config: ApplicationConfig,
+        ) =
+            with(config) {
                 val url = property("ktor.database.url").getString()
                 val user = property("ktor.database.user").getString()
                 val driver = property("ktor.database.driver").getString()
@@ -45,6 +49,5 @@ data class DatabaseConfig(
 
                 DatabaseConfig(url, user, driver, password)
             }
-        }
     }
 }

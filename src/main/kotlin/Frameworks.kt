@@ -19,11 +19,11 @@ fun Application.configureFrameworks() {
 }
 
 val userModule = module {
-    single<UserRepository> { UserRepositoryImpl() }
+    single<UserRepository>() { UserRepositoryImpl() }
     single<UserRepository>(named("primary")) { UserRepositoryImpl() }
-    single<UserRepository>(named("secondary")) { UserRepositoryImplV2() }
+    single<UserRepository>(named("secondary")) { UserRepositoryImpl() }
 
-    factory { } withOptions {
+    factory<UserRepository> { UserRepositoryImpl() } withOptions {
         named("alwaysNew")
         createdAtStart()
     }

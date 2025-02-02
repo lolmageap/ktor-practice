@@ -14,16 +14,12 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
     Ktor,
     Logback,
     JUnit5,
-    Ktor-Server-Netty,
+    Ktor-Server-CIO,
     
     ---
     
-    Double Request,
     Status Pages,
-    Request Validation,
     Routing,
-    OpenAPI,
-    Swagger,
     Call Logging,
     Contents negation,
     Jackson,
@@ -42,29 +38,27 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - Exception Handler 설정
 - Contents negation 및 Serialization 설정 (Jackson, Kotlinx Serialization, ZonedDateTime)
 - Call Logging을 plugin으로 만들어서 설정
-- Routing 설정(Spring과 어떻게 다른지), Swagger 설정
+- Routing 설정(Spring과 어떻게 다른지)
 - Request Parameter를 확장 함수로 만들기, Path variable 별도의 클래스로 만들어서 관리하기
 - Koin 설정(이것도 Spring과 어떻게 다른지)
 - Database 설정
 - Exposed 설정
 - Entity 및 Repository 구현(event subscribe로 updated at 구현하기)
 - Controller와 Service 구현(간단한 post와 get API만 구현)
-- Request Validation 설정, Double Request 설정(Double Request는 무엇이고 왜 필요한가를 설명)
 
 ## - 프로젝트 로드맵 상세
 
 ### PPT로 Ktor에 대한 간단한 소개
 
 - Ktor는 무엇이고 어떤 장점으로 인해 Ktor를 사용하는지를 설명합니다.
-- Ktor는 비동기, 빠른 속도, 경량화, 쉬운 사용성, 확장성이 장점입니다.
+- Ktor는 비동기 처리, 빠른 속도, 경량화, 쉬운 사용성이 장점입니다.
 - 단점은 아직까지는 생태계가 부족합니다.
 
 ### 0. IntelliJ IDEA에서 Ktor 프로젝트 생성
 
 - IntelliJ IDEA에서 새로운 프로젝트를 생성합니다.
 - 생성 할 때 Ktor 프로젝트를 선택합니다.
-- Plugin을 추가 할 때 Dependency에 Double Request, Request Validation, Routing, Swagger, Call Logging, Contents negation,
-  Jackson, Kotlinx Serialization, Exposed, Koin을 추가합니다.
+- Plugin을 추가 할 때 Dependency에 Routing, Call Logging, Contents negation, Jackson, Kotlinx Serialization, Exposed, Koin을 추가합니다.
 - gradle.properties와 build.gradle.kts에서 kotlin version 2.0.0, exposed 0.55.0으로 수정합니다.
 
 ### 1. application.conf file 설정 및 설명
@@ -89,7 +83,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 
 - Call Logging을 설정할 때 Call Logging은 무엇이고 왜 필요한가를 설명합니다.
 - Routing 설정은 Spring과 어떻게 다른지를 설명합니다.
-- Swagger를 사용하여 API를 확인하고 실행하는 방법을 설명합니다.
 - Request, Response Model을 만들고 사용하는 방법을 설명합니다.
 - Routing에서 Query parameter와 Request Body를 사용하는 방법을 설명합니다.
 - Request Parameter를 확장 함수로 만들어서 사용하는 방법을 설명합니다.
@@ -119,13 +112,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - 설명 할 때 Spring과 어떻게 다른지를 설명합니다.
 - Router에서 Koin을 사용하여 Repository를 주입하는 방법을 설명합니다.
 
-### 시간이 남는다면. Double Request와 Request Validation 설정
-
-- Double Request를 설정할 때 Double Request는 무엇이고 왜 필요한가를 설명합니다.
-- Request Validation을 설정할 때 Request Validation은 무엇이고 왜 필요한가를 설명합니다.
-
 ## - 프로젝트 실행
 
 - IntelliJ IDEA에서 프로젝트를 실행합니다.
-- Swagger로 API를 확인하고 실행합니다.
-- Test 코드와 request.http 파일을 사용하여 API를 테스트합니다.
+- request.http 파일로 API를 확인하고 실행합니다.

@@ -25,18 +25,18 @@ fun Route.user() {
         call.respondText(status = HttpStatusCode.Created) { "요청이 성공적으로 들어왔습니다." }
     }
 
-    get("/api/v1/users/{user-id}") {
-        val userId = call.pathParameters["user-id"]?.toLong()
-            ?: throw IllegalArgumentException("'user-id' is missing")
+    get("/api/v1/users/{username}") {
+        val username = call.pathParameters["username"]
+            ?.let(Username::of)
+            ?: throw IllegalArgumentException("'username' is missing")
 
-        val name = UserName(call.queryParameters["name"]!!)
         val minAge = call.queryParameters["minAge"]?.toInt()
         val maxAge = call.queryParameters["maxAge"]?.toInt()
 
         val response =
             newSuspendedTransaction {
                 userRepository.findOne(
-                    name = name,
+                    name = username,
                     minAge = minAge,
                     maxAge = maxAge,
                 )
@@ -45,15 +45,15 @@ fun Route.user() {
         call.respond(response)
     }
 
-    get("/api/v2/users/{user-id}") {
-        val userId = call.pathParameters.userId
+    get("/api/v2/users/{username}") {
+        val username = call.pathParameters.username
 
         val request = call.modelAttributes<GetUserRequest>()
 
         val response =
             newSuspendedTransaction {
                 userRepository.findOne(
-                    name = request.name,
+                    name = username,
                     minAge = request.minAge,
                     maxAge = request.maxAge,
                 )
@@ -63,22 +63,41 @@ fun Route.user() {
     }
 }
 
+@JvmInline
+value class Username(
+    val value: String,
+) {
+    companion object {
+        fun of(value: String) = Username(value)
+    }
+
+    init {
+        // validation
+    }
+}
+
+data class UserRequest(
+    val name: Username,
+    val age: Int,
+    val birthday: LocalDate,
+)
+
 data class GetUserRequest(
-    val name: UserName,
     val minAge: Int?,
     val maxAge: Int?,
 )
 
 data class UserResponse(
     val id: Long,
-    val name: UserName,
+    val name: Username,
     val age: Int,
     val birthday: LocalDate,
 )
 
-val Parameters.userId: Long
-    get() = this["user-id"]?.toLong()
-        ?: throw IllegalArgumentException("'user-id' is missing")
+val Parameters.username: Username
+    get() = this["username"]
+        ?.let(Username::of)
+        ?: throw IllegalArgumentException("'username' is missing")
 
 inline fun <reified T : Any> RoutingCall.modelAttributes(): T {
     require(T::class.isData) { "Client에게 값을 받을 때는 Data Class만 지원합니다." }
@@ -89,7 +108,7 @@ inline fun <reified T : Any> RoutingCall.modelAttributes(): T {
             else key to value
         }
 
-    val mapper = application.attributes[ObjectMapperKey]
+    val mapper = application.attributes[objectMapperKey]
 
     return try {
         mapper.convertValue(map, T::class.java)

@@ -1,8 +1,0 @@
-openapi: "3.0.3"
-info:
-  title: "ktor_practice API"
-  description: "ktor_practice API"
-  version: "1.0.0"
-servers:
-- url: "https://ktor-practice"
-paths: {}
