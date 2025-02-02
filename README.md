@@ -2,7 +2,7 @@
 
 ## - 프로젝트 소개
 
-Ktor 프레임워크를 사용하여 간단한 REST API 서버를 구현하는 예제입니다.
+Ktor 프레임워크를 사용하여 간단한 REST API 서버를 구현하는 예제입니다.  
 ORM은 Exposed를 사용합니다.  
 프로젝트는 Gradle과 Kotlin DSL로 구성되어 있고 JDK 17, Kotlin 2.0.0 버전, Ktor Framework는 3.0.3 버전을 사용합니다.
 
@@ -96,29 +96,28 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency {
 - Routing에서 Path variable를 사용하는 방법을 설명합니다.
 - Path variable을 별도의 클래스로 만들어서 사용하는 방법을 설명합니다.
 
-### 5. Koin 설정
-
-- Koin이 무엇이고 Dependency Injection을 어떻게 하는지를 설명합니다.
-- 설명 할 때 Spring과 어떻게 다른지를 설명합니다.
-
-### 6. Database 설정
+### 5. Database 설정
 
 - Database 설정은 H2 Database를 사용합니다.
 - conf 파일에 정의된 Database 설정을 읽어오는 방법을 설명합니다.
 - Transaction과 Connection Pool을 설정합니다.
 
-### 7. Exposed Schema, Table 설정
+### 6. Exposed Schema, Table 설정
 
 - Exposed가 무엇이고 ORM을 어떻게 사용하는지를 설명합니다.
 - 간단하게 DAO와 DSL을 사용하는 방법을 설명합니다.
 - Entity는 Exposed의 Table을 상속 받아서 구현합니다.
 - Update 시간을 자동으로 설정하는 방법을 설명하고 구현합니다.
 
-### 8. Controller와 Service, Repository 구현
+### 7. Repository 구현
 
-- Controller와 Service, Repository를 구현합니다.
-- Controller는 Routing을 사용하여 구현합니다.
-- Service는 Repository를 사용하여 구현합니다.
+- Exposed DSL Query를 사용하여 Repository를 구현합니다.
+
+### 8. Koin 설정
+
+- Koin이 무엇이고 Dependency Injection을 어떻게 하는지를 설명합니다.
+- 설명 할 때 Spring과 어떻게 다른지를 설명합니다.
+- Router에서 Koin을 사용하여 Repository를 주입하는 방법을 설명합니다.
 
 ### 시간이 남는다면. Double Request와 Request Validation 설정
 
