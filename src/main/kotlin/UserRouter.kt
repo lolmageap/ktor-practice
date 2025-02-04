@@ -11,18 +11,20 @@ import java.time.LocalDate
 fun Route.user() {
     val userRepository by application.inject<UserRepository>()
 
+    get("/") {
+        call.respondText { "Hello World" }
+    }
+
     post("/api/v1/users") {
         val request = call.receive<UserRequest>()
 
         newSuspendedTransaction {
-            userRepository.create(
-                username = request.name,
-                insertAge = request.age,
-                insertBirthday = request.birthday,
-            )
+            with(request) {
+                userRepository.create(name, age, birthday)
+            }
         }
 
-        call.respondText(status = HttpStatusCode.Created) { "요청이 성공적으로 들어왔습니다." }
+        call.respondText(status = HttpStatusCode.Created) { "성공" }
     }
 
     get("/api/v1/users/{username}") {
@@ -32,17 +34,6 @@ fun Route.user() {
 
         val minAge = call.queryParameters["minAge"]?.toInt()
         val maxAge = call.queryParameters["maxAge"]?.toInt()
-
-        val response =
-            newSuspendedTransaction {
-                userRepository.findOne(
-                    name = username,
-                    minAge = minAge,
-                    maxAge = maxAge,
-                )
-            }
-
-        call.respond(response)
     }
 
     get("/api/v2/users/{username}") {
