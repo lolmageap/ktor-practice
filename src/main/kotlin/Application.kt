@@ -12,5 +12,4 @@ fun Application.module() {
     configureDatabases()
     configureFrameworks()
     configureRouting()
-    configureException()
 }
