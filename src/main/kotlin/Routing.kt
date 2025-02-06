@@ -25,7 +25,7 @@ value class UserName(val value: String)
 data class CreateUserRequest(
     val name: UserName,
     val age: Int,
-    val birthday: String,
+    val birthday: LocalDate,
 )
 
 data class UserResponse(
