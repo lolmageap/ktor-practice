@@ -29,7 +29,7 @@ data class CreateUserRequest(
 )
 
 data class UserResponse(
-    val id: Int,
+    val id: Long,
     val name: UserName,
     val age: Int,
     val birthday: LocalDate,
