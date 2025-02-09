@@ -41,11 +41,17 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 1. Status Pages
 2. Routing
 3. Call Logging
-4. Contents negation
+4. Contents Negotiation
 5. Jackson
 6. Kotlinx Serialization
 7. Exposed
 8. Koin
+
+### 이후 추가할 dependency
+
+1. ktor-swagger-ui
+2. jackson-datatype-jsr310
+3. exposed-java-time
 
 ## Ktor 소개
 
@@ -67,55 +73,62 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 
 ## 프로젝트 로드맵
 
-- IntelliJ IDEA, Ktor Initializer에서 Ktor 프로젝트 생성 혹은 git clone
-- application.conf file 설정 및 설명
+- IntelliJ IDEA, Ktor Initializer에서 Ktor 프로젝트 생성
+- application.conf file 설정
 - Exception Handler 설정
-- Contents negation 및 Serialization 설정
+- Contents Negotiation 및 Serialization 설정
 - Routing 설정
 - Database 설정
 - Exposed Entity, Repository 구현
 - Dependency Injection 설정
+- Swagger 설정
 
 ## 프로젝트 로드맵 상세
 
 ### Chapter0. IntelliJ IDEA에서 Ktor 프로젝트 생성
 
 - IntelliJ IDEA에서 Ktor 프로젝트를 선택하고 프로젝트를 생성
-- Plugin을 추가 시 Dependency에 `Routing, Call Logging, Contents Negation, Jackson, Kotlinx Serialization, Exposed, Koin` 추가
+- Plugin 추가 시 `Routing, Call Logging, Contents Negotiation, Jackson, Kotlinx Serialization, Exposed, Koin` 추가
 - gradle.properties와 build.gradle.kts에서 kotlin version 2.0.0, exposed 0.55.0으로 수정
 
 ### Chapter1. application.conf file 설정 및 설명
 
-- application.conf 파일에 `포트`, `Database` 설정 추가
-- 포트 Default 값은 8080으로 설정
+- application.conf 파일에 `Database` 설정 추가
+- Port Default 값은 8080으로 설정
 - Database는 `H2`를 사용
 
 ### Chapter2. Exception Handler 설정
 
+- Exception.kt 파일을 별도로 분리
 - Custom Exception을 별도로 정의
 - `StatusPages`를 사용하여 `Exception Handler`를 설정
 
-### Chapter3. Contents negation 및 Serialization 설정
+### Chapter3. Contents Negotiation 및 Serialization 설정
 
-- Contents Negation 설정에서 `Jackson`, `Kotlinx Serialization`, `Java Time` 설정
-- Request Body에 `날짜 객체`와 `Value Class` 바인딩 설정 추가
-- Application Attribute Context에 에 설정된 ObjectMapper를 등록(설정한 ObjectMapper를 전역에서 사용 가능)
+- `jackson-datatype-jsr310` dependency 추가
+- Contents Negotiation 설정에서 `Jackson`, `Kotlinx Serialization`, `Java Time` 설정
+- Request Body에 `날짜 객체`와 `Value Class` Binding 설정 추가
+- Application Attribute Context에 설정된 ObjectMapper를 등록(설정한 ObjectMapper를 전역에서 사용 가능)
 
 ### Chapter4. Routing 설정
 
 - Call Logging 설명
-- Get, Post API를 정의
+- User Router 별도로 분리
+- Get, Post API를 정의(Home, User, UserV2)
 - Request Model, Response Model 정의
 - `Query Parameter`, `PathVariable`, `Request Body` 정의
+- `PathVariable`를 읽어오는 부분을 확장 함수로 리팩토링
+- `Request Parameter`를 Model로 Binding 할 수 있게 확장 함수로 리팩토링
 
 ### Chapter5. Database 설정
 
-- `application.conf` 파일에 정의된 Database 설정을 읽어와서 `Data Class`에 바인딩
+- `application.conf` 파일에 정의된 Database 설정을 읽어와서 `Data Class`에 Binding
 
 ### Chapter6. Exposed Schema, Table 설정 및 Repository 구현
 
+- `exposed-java-time` dependency 추가
 - Exposed의 `DSL로 Schema, Table` 설정
-- Exposed DSL Query를 사용하여 Repository를 구현
+- Exposed DSL Query를 사용하여 Repository를 구현(CRUD)
 - `SchemaUtils`로 Runtime에 Table을 생성
 
 ### Chapter7. Koin 설정
@@ -123,15 +136,15 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 - Dependency Injection 설정(Spring의 수동 빈 주입과 유사)
 - `factory`, `primary`, `named`를 사용한 qualifier 설명
 - Koin을 사용해서 Router에 Repository를 주입
+- Primary Bean과 Named Bean을 사용하여 RepositoryV2 주입
 
-### Chapter8. API Refactoring(시간이 남을 경우)
+### Chapter8. Swagger 설정
 
-- Router에서 `PathVariable`를 읽어오는 부분을 확장 함수로 리팩토링
-- Router에서 `Request Parameter`를 Model로 Binding 할 수 있게 확장 함수로 리팩토링
-- conf file의 환경 변수를 Data Class Binding 할 수 있게 리팩토링
+- `ktor-swagger-ui` dependency 추가
+- Swagger 설정을 위한 `OpenAPI` 설정
+- `SwaggerUI`를 사용하여 API 문서화
 
 ## 프로젝트 실행
 
 - IntelliJ IDEA에서 프로젝트를 실행
-- [request.http](request.http) 파일로 API를 확인하고 실행
-- http file은 IntelliJ Ultimate 버전에서만 사용 가능하기 때문에 Community 버전에서는 Postman(https://www.postman.com)을 사용 권장
+- `http://localhost:8080`으로 접속하고 Swagger UI로 API 문서 확인 및 테스트
