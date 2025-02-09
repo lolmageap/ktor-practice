@@ -4,12 +4,6 @@ Content-Type: application/json
 Cache-Control: no-cache
 
 
-### Get 요청
-GET http://localhost:8080/api/v2/users/cherhy?minAge=20&maxAge=30
-Content-Type: application/json
-Cache-Control: no-cache
-
-
 ### Post 요청
 POST http://localhost:8080/api/v1/users
 Content-Type: application/json

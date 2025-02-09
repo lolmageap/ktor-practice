@@ -128,6 +128,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 
 - Router에서 `PathVariable`를 읽어오는 부분을 확장 함수로 리팩토링
 - Router에서 `Request Parameter`를 Model로 Binding 할 수 있게 확장 함수로 리팩토링
+- conf file의 환경 변수를 Data Class Binding 할 수 있게 리팩토링
 
 ## 프로젝트 실행
 
