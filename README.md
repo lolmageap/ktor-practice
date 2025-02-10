@@ -143,6 +143,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 ### Chapter6. Exposed Schema, Table 설정 및 Repository 구현
 
 - `exposed-java-time` dependency 추가
+- BaseTable을 정의하고 `createdAt`, `updatedAt` 컬럼을 추가, 정렬 기능 추가
 - Exposed의 `DSL로 Schema, Table` 설정
 - Exposed DSL Query를 사용하여 Repository를 구현(CRUD)
 - `SchemaUtils`로 Runtime에 Table을 생성
