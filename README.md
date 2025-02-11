@@ -133,8 +133,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 - Get, Post API를 정의(Home, User, UserV2)
 - Request Model, Response Model 정의
 - `Query Parameter`, `PathVariable`, `Request Body` 정의
-- `PathVariable`를 읽어오는 부분을 확장 함수로 리팩토링
-- `Request Parameter`를 Model로 Binding 할 수 있게 확장 함수로 리팩토링
 
 ### Chapter5. Database 설정
 
@@ -144,7 +142,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 
 - `exposed-java-time` dependency 추가
 - BaseTable을 정의하고 `createdAt`, `updatedAt` 컬럼을 추가, 정렬 기능 추가
-- Exposed의 `DSL로 Schema, Table` 설정
+- Exposed의 DSL로 BaseTable을 상속 받은 `Schema, Table` 정의
 - Exposed DSL Query를 사용하여 Repository를 구현(CRUD)
 - `SchemaUtils`로 Runtime에 Table을 생성
 
@@ -160,6 +158,13 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 - `ktor-swagger-ui` dependency 추가
 - Swagger 설정을 위한 `OpenAPI` 설정
 - `SwaggerUI`를 사용하여 API 문서화
+
+### Chapter9. Refactoring
+
+- `PathVariable`를 읽어오는 부분을 확장 함수로 리팩토링
+- `Request Parameter`를 Model로 Binding 할 수 있게 확장 함수로 리팩토링
+- Pagination을 위한 `PageRequest` Model 추가
+- Swagger를 적용한 API V2 문서화
 
 ## 프로젝트 실행
 
