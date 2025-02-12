@@ -86,14 +86,13 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 ### 요구사항 명세
 
 1. Home API
-   - 서버가 정상적으로 동작하는지 확인하는 API
-   - GET Method로 호출 시 `Hello, Ktor`를 반환
+    - 서버가 정상적으로 동작하는지 확인하는 API
+    - GET Method로 호출 시 `Hello, Ktor`를 반환
 2. User API
-   - 사용자 정보를 관리하는 API로 데이터를 저장하고 조회
-   - POST Method로 호출 시 사용자 정보를 저장
-   - GET Method로 호출 시 사용자 정보를 조회
-     - 전체 사용자 조회 시 나이를 범위 조건으로 지정하고, 이름은 대소문자를 구분하지 않고 포함 여부 검색
-   - Swagger를 사용하여 API 문서화
+    - 회원은 id, name, age, birthday, status, createdAt, updatedAt 필드를 포함
+    - 사용자 정보를 저장하는 API 구현 (이름은 unique)
+    - 나이를 범위 조건으로 지정하고, 이름은 대소문자를 구분하지 않고 포함 여부를 검색하는 사용자 조회 API 구현 (페이지네이션 및 정렬 포함)
+    - Swagger를 사용하여 API 문서화
 
 ## 프로젝트 로드맵 상세
 
@@ -120,7 +119,7 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 - `jackson-datatype-jsr310` dependency 추가
 - Contents Negotiation 설정에서 `Jackson`, `Kotlinx Serialization`, `Java Time` 설정
 - 직렬화 과정에서 매핑되지 않은 필드를 무시하도록 설정
-- 배열에 단일 값을 바인딩 가능하도록 설정 
+- 배열에 단일 값을 바인딩 가능하도록 설정
 - Request Body에 `날짜 객체`와 `Value Class` Binding 설정 추가
 - Application Attribute Context에 설정된 ObjectMapper를 등록(설정한 ObjectMapper를 전역에서 사용 가능)
 
