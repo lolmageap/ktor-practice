@@ -6,9 +6,17 @@ import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import org.jetbrains.exposed.sql.SortOrder
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
+import org.koin.core.qualifier.named
+import org.koin.ktor.ext.inject
 
 fun Application.configureRouting() {
     routing {
+        val userRepositoryV1 by application.inject<UserRepository>()
+        val userRepositoryV2 by application.inject<UserRepository>(named("second"))
+
         get("/") {
             call.respondText { "Hello, Ktor!!" }
         }
@@ -24,6 +32,15 @@ fun Application.configureRouting() {
              */
             post("/users") {
                 val request = call.receive<CreateUserRequest>()
+
+                newSuspendedTransaction {
+                    addLogger(StdOutSqlLogger)
+                    userRepositoryV1.create(
+                        name = request.name,
+                        age = request.age,
+                        birthday = request.birthday,
+                    )
+                }
 
                 call.respondText(status = HttpStatusCode.Created) { "성공" }
             }
@@ -62,7 +79,18 @@ fun Application.configureRouting() {
                         directions = directions,
                     )
 
-                call.respondText { "Success" }
+                val response =
+                    newSuspendedTransaction {
+                        addLogger(StdOutSqlLogger)
+                        userRepositoryV1.findAll(
+                            name = userName,
+                            minAge = findUserRequest.minAge,
+                            maxAge = findUserRequest.maxAge,
+                            pageRequest = pageRequest,
+                        )
+                    }
+
+                call.respond(response)
             }
         }
     }
