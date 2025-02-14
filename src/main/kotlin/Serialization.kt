@@ -1,5 +1,6 @@
 package com.example
 
+import com.fasterxml.jackson.databind.DeserializationFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
@@ -42,6 +43,16 @@ fun Application.configureSerialization() {
              * 이로 인해 Kotlin의 Value Class를 Client와 Server 간에 주고 받을 수 있다.
              */
             registerKotlinModule()
+
+            /**
+             * client가 보낸 JSON에 없는 property가 있을 때, Deserialization 과정에서 Exception을 발생시키지 않도록 설정한다.
+             */
+            configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+
+            /**
+             * client가 보낸 JSON에 배열이 아닌 단일 값이 있을 때, Deserialization 시 배열로 변환한다.
+             */
+            configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
 
             /**
              * 현재 jackson 함수 외에 상위에 함수들도 this keyword가 사용중이다. (총 3개)

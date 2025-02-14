@@ -1,5 +1,6 @@
 package com.example
 
+import io.github.smiley4.ktorswaggerui.dsl.routing.get
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -106,5 +107,62 @@ fun Application.configureRouting() {
                 call.respond(response)
             }
         }
+
+        route("/api/v2") {
+            get("/users/{user-name}", {
+                summary = "회원 조회"
+                request {
+                    pathParameter<String>("user-name")
+
+                    queryParameter<Int>("minAge")
+                    queryParameter<Int>("maxAge")
+
+                    queryParameter<Int>("page")
+                    queryParameter<Int>("size")
+                    queryParameter<List<String>>("properties")
+                    queryParameter<List<SortOrder>>("directions")
+                }
+
+                response {
+                    HttpStatusCode.OK to {
+                        body<List<UserResponse>>()
+                    }
+                }
+            }) {
+                val userName = call.parameters.userName
+
+                val findUserRequest = call.modelAttribute<FindUserRequest>()
+                val pageRequest = call.modelAttribute<PageRequest>()
+
+                val response =
+                    newSuspendedTransaction {
+                        addLogger(StdOutSqlLogger)
+                        userRepositoryV1.findAll(
+                            name = userName,
+                            minAge = findUserRequest.minAge,
+                            maxAge = findUserRequest.maxAge,
+                            pageRequest = pageRequest,
+                        )
+                    }
+
+                call.respond(response)
+            }
+        }
     }
+}
+
+val Parameters.userName
+    get() = UserName(this["user-name"]!!)
+
+inline fun <reified T> RoutingCall.modelAttribute(): T {
+    val map =
+        queryParameters.entries().associate { (key, values) ->
+            if (values.isEmpty()) key to null
+            else if (values.size == 1) key to values.first()
+            else key to values
+        }
+
+    val objectMapper = application.attributes[objectMapperKey]
+
+    return objectMapper.convertValue(map, T::class.java)
 }
