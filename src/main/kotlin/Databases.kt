@@ -3,6 +3,10 @@ package com.example
 import io.ktor.server.application.*
 import io.ktor.server.config.*
 import org.jetbrains.exposed.sql.Database
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.StdOutSqlLogger
+import org.jetbrains.exposed.sql.addLogger
+import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabases() {
     val dataSource = DataSource.of(environment.config)
@@ -16,6 +20,11 @@ fun Application.configureDatabases() {
                 password = password,
             )
         }
+
+    transaction {
+        addLogger(StdOutSqlLogger)
+        SchemaUtils.create(Users)
+    }
 
     /**
      * Application이 종료되는 것을 감지해서 종료되기 직전에 정의된 함수를 실행한다.

@@ -31,6 +31,9 @@ repositories {
 
 dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.18.2")
+
+    implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-call-logging")
