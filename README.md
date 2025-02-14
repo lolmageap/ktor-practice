@@ -111,7 +111,6 @@ intellij IDEA에서 프로젝트 생성시 추가 하는 dependency
 ### Chapter2. Exception Handler 설정
 
 - Exception.kt 파일을 별도로 분리
-- Custom Exception을 별도로 정의
 - `StatusPages`를 사용하여 `Exception Handler`를 설정
 
 ### Chapter3. Contents Negotiation 및 Serialization 설정
