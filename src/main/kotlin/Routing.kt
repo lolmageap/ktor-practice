@@ -1,5 +1,6 @@
 package com.example
 
+import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -30,7 +31,19 @@ fun Application.configureRouting() {
             /**
              * ApplicationCall의 extension 함수인 receive를 사용하여 `Request Body`를 읽어온다.
              */
-            post("/users") {
+            post("/users", {
+                summary = "회원 등록"
+
+                request {
+                    body<CreateUserRequest>()
+                }
+
+                response {
+                    HttpStatusCode.Created to {
+                        description = "성공"
+                    }
+                }
+            }) {
                 val request = call.receive<CreateUserRequest>()
 
                 newSuspendedTransaction {

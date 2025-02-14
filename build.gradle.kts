@@ -34,6 +34,8 @@ dependencies {
 
     implementation("org.jetbrains.exposed:exposed-java-time:$exposed_version")
 
+    implementation("io.github.smiley4:ktor-swagger-ui:4.1.6")
+
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-core")
     implementation("io.ktor:ktor-server-call-logging")

@@ -22,4 +22,5 @@ fun Application.module() {
     configureMonitoring()
     configureSerialization()
     configureException()
+    configureSwagger()
 }
