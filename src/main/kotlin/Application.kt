@@ -21,4 +21,5 @@ fun Application.module() {
     configureFrameworks()
     configureMonitoring()
     configureSerialization()
+    configureException()
 }
